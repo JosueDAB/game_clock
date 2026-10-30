@@ -567,6 +567,73 @@ body { position: relative; }
 /* Sombra suave del rectángulo rojo contenedor: da contraste con el fondo animado sin llamar la atención. */
 .clock { box-shadow: 0 8px 26px rgba(0, 0, 0, 0.30), 0 2px 6px rgba(0, 0, 0, 0.18); }
 .credit { position: absolute; right: max(10px, env(safe-area-inset-right, 0px)); bottom: 2px; z-index: 1; color: #fff; opacity: 0.7; font: 500 10px/1.2 var(--font-ui); letter-spacing: 0.02em; white-space: nowrap; text-shadow: 0 0 3px rgba(0, 0, 0, 0.45); pointer-events: none; user-select: none; -webkit-user-select: none; }
+
+/* ===== COMPATIBILIDAD Y AJUSTE AUTOMÁTICO DE PANTALLA =====
+   Mantiene el diseño horizontal en pantallas apaisadas y usa la composición
+   vertical en móviles/tabletas en vertical. No modifica el motor del reloj. */
+.stage { min-width: 0; }
+.clock, .top, .deck, .player, .mid, .tools, .toolrow { min-width: 0; }
+.top > *, .deck > * { min-width: 0; }
+
+/* Fallback para navegadores antiguos sin unidades de consulta de contenedor (cqw). */
+@supports not (width: 1cqw) {
+  .clock { --u: calc(100vw * 0.0004106786); }
+  html[data-layout="v"] .clock { --u: calc(100vw * 0.001); }
+}
+
+/* En vertical el reloj ocupa el ancho disponible y puede crecer en altura:
+   evita comprimirlo dentro de la altura del teléfono. */
+html[data-layout="v"] body {
+  min-height: 100%;
+  align-items: flex-start;
+  padding-top: max(10px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+}
+html[data-layout="v"] .stage {
+  width: min(100%, 760px);
+  max-width: 760px;
+  margin: 0 auto;
+}
+html[data-layout="v"] .clock {
+  width: 100%;
+  min-width: 0;
+}
+html[data-layout="v"] .top { min-width: 0; }
+html[data-layout="v"] .heading { min-width: 0; }
+html[data-layout="v"] .title svg { max-width: 100%; }
+html[data-layout="v"] .deck { min-width: 0; }
+html[data-layout="v"] .player { min-width: 0; }
+html[data-layout="v"] .screen { width: 100%; }
+html[data-layout="v"] .cards { width: 100%; }
+
+/* En horizontal, el escenario cabe tanto por ancho como por alto del navegador. */
+html[data-layout="h"] .stage {
+  width: min(100%, calc((100vh - 24px) * 1.8504));
+  width: min(100%, calc((100dvh - 24px) * 1.8504));
+  max-width: none;
+}
+html[data-layout="h"] .clock { width: 100%; }
+
+/* Cabeceras compactas: evita que título, logotipo y herramientas se monten. */
+@media (max-width: 900px) and (orientation: landscape) {
+  html[data-layout="h"] .logo { margin-left: calc(28 * var(--u)); }
+  html[data-layout="h"] .tools { margin-right: calc(24 * var(--u)); }
+}
+@media (max-width: 560px) {
+  body { padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)); }
+  .modal, .help, .palmodal, .setpop { padding: 8px; }
+  .mcard { padding: 20px 16px 16px; }
+}
+
+/* Respeta el área segura de móviles con notch y evita zoom/selección accidental. */
+button, .screen { -webkit-tap-highlight-color: transparent; }
+@media (max-height: 500px) and (orientation: landscape) {
+  body { padding-block: 6px; }
+  html[data-layout="h"] .stage {
+    width: min(100%, calc((100dvh - 12px) * 1.8504));
+  }
+}
+
 </style>
 
 </head>
@@ -2420,6 +2487,13 @@ const UnoSound = (() => {
   // =====================================================================
   const root = document.documentElement, top = $('.top'), tools = $('#tools');
   const orient = $('#btnOrient'), gear = $('#btnGear'), pop = $('#setpop'), card = $('#setcard');
+  const wantsVerticalLayout = () => {
+    const w = Math.max(1, window.innerWidth);
+    const h = Math.max(1, window.innerHeight);
+    // La composición apaisada necesita una pantalla claramente más ancha que alta.
+    return (window.matchMedia && window.matchMedia('(orientation: portrait)').matches) ||
+      w <= 560 || (w / h) < 1.5;
+  };
   let vertical = false;
   function sync() {
     const label = t(vertical ? 'b_orient_to_h' : 'b_orient_to_v');
@@ -2439,15 +2513,28 @@ const UnoSound = (() => {
     if (refocus) gear.focus();
   }
   // Cambia de vista, cierra Ajustes y mueve #tools entre la cabecera y la ventana flotante.
-  function setLayout(v) {
-    vertical = v;
-    root.dataset.layout = v ? 'v' : 'h';
+  function setLayout(v, moveFocus = true) {
+    vertical = !!v;
+    root.dataset.layout = vertical ? 'v' : 'h';
     closePop(false);
-    if (v) card.append(tools); else top.append(tools);
+    if (vertical) card.append(tools); else top.append(tools);
     sync();
-    (v ? gear : orient).focus();
+    if (moveFocus) (vertical ? gear : orient).focus();
   }
   orient.addEventListener('click', () => setLayout(!vertical));
+  // El formato se adapta al dispositivo y a los cambios de orientación/tamaño.
+  // El botón de orientación sigue permitiendo cambiarlo manualmente.
+  let resizeFrame = 0;
+  const adaptToViewport = () => {
+    if (resizeFrame) cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => {
+      resizeFrame = 0;
+      const next = wantsVerticalLayout();
+      if (next !== vertical) setLayout(next, false);
+    });
+  };
+  window.addEventListener('resize', adaptToViewport, { passive: true });
+  window.addEventListener('orientationchange', adaptToViewport, { passive: true });
   gear.addEventListener('click', () => (pop.hidden ? openPop() : closePop(true)));
   pop.addEventListener('click', (e) => { if (e.target === pop) closePop(true); });   // clic fuera de la ventana: se cierra
   document.addEventListener('keydown', (e) => {
@@ -2456,6 +2543,7 @@ const UnoSound = (() => {
     e.preventDefault(); closePop(true);
   }, true);
   UnoI18n.onChange(sync);
+  setLayout(wantsVerticalLayout(), false);
   sync();
 })();
 </script>
