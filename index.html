@@ -58,6 +58,7 @@
 /* Reseteo: el borde y el relleno cuentan dentro del tamaño de cada elemento. */
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; -moz-text-size-adjust: 100%; text-size-adjust: 100%; }
 html, body { height: 100%; }
 body {
   min-height: 100%; height: auto;   /* crece con el contenido si no cabe, para que nada quede cortado arriba */
@@ -260,7 +261,7 @@ button:disabled { cursor: not-allowed; }
 /* =====================================================================
     1.3  VENTANAS EMERGENTES Y GUÍA DE USO
    ===================================================================== */
-.modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(20, 16, 17, 0.62); }
+.modal { position: fixed; top: 0; right: 0; bottom: 0; left: 0; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(20, 16, 17, 0.62); }
 .mcard { width: min(100%, 440px); background: var(--ink); color: var(--white); border: 4px solid #000; outline: 3px solid var(--yellow); border-radius: 24px; padding: 26px 24px 22px; text-align: center; }
 .mtitle { margin: 0 0 10px; font-size: 22px; font-weight: 800; line-height: 1.2; }
 .mtext { margin: 0 0 22px; font-size: 16px; line-height: 1.45; color: #e6e6e6; }
@@ -276,7 +277,7 @@ button:disabled { cursor: not-allowed; }
 }
 
 /* ===== Guía de uso: panel compacto, 2 columnas en pantallas anchas y 1 en estrechas. Solo informativa. ===== */
-.help { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 12px; background: rgba(20, 16, 17, 0.66); font-family: var(--font-ui); color: var(--ink); }
+.help { position: fixed; top: 0; right: 0; bottom: 0; left: 0; inset: 0; z-index: 40; display: grid; place-items: center; padding: 12px; background: rgba(20, 16, 17, 0.66); font-family: var(--font-ui); color: var(--ink); }
 .hcard { width: min(100%, 880px); max-height: 100%; display: flex; flex-direction: column; background: #fff; border: 4px solid #000; outline: 3px solid var(--yellow); border-radius: 20px; overflow: hidden; }
 .hhead { flex: none; display: flex; align-items: center; gap: 10px; background: var(--red); color: #fff; padding: 8px 10px 8px 18px; border-bottom: 4px solid #000; }
 .hhead h2 { margin: 0; flex: 1; min-width: 0; font-size: clamp(15px, 3.8vw, 20px); font-weight: 800; line-height: 1.15; letter-spacing: 0.02em; }
@@ -418,7 +419,7 @@ button:disabled { cursor: not-allowed; }
 @media (hover: hover) { .pbtn:hover:not(:disabled) { background: color-mix(in srgb, var(--pc) 80%, #fff); } }
 .pbtn:active:not(:disabled) { background: color-mix(in srgb, var(--pc) 80%, #fff); }
 /* Selector directo de paleta (pulsación larga): círculos de color sin texto */
-.palmodal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(20, 16, 17, 0.62); }
+.palmodal { position: fixed; top: 0; right: 0; bottom: 0; left: 0; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(20, 16, 17, 0.62); }
 .palcard { display: grid; grid-template-columns: repeat(4, auto); gap: 14px; justify-content: center; background: var(--ink); border: 4px solid #000; outline: 3px solid var(--yellow); border-radius: 24px; padding: 22px; }
 .palcard .sw { width: clamp(46px, 13vw, 72px); aspect-ratio: 1; border-radius: 50%; background: var(--c); border: 4px solid #000; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35); transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.14s ease; }
 .palcard .sw[aria-checked="true"] { box-shadow: 0 0 0 5px #fff; }
@@ -427,7 +428,7 @@ button:disabled { cursor: not-allowed; }
 @media (hover: hover) { .palcard .sw:hover:not(:disabled) { transform: scale(1.12); } }
 .palcard .sw:active:not(:disabled) { transform: scale(0.92); }
 /* Aviso de desbloqueo del modo Full Spectrum */
-.fsalert { position: fixed; inset: 0; margin: auto; height: fit-content; z-index: 2147483000; width: min(92vw, 460px); background: var(--ink); color: var(--white); border: 4px solid #000; outline: 3px solid var(--yellow); border-radius: 24px; padding: 22px 20px 18px; text-align: center; font: 900 clamp(20px, 5.4vw, 30px) / 1.2 var(--font-ui); pointer-events: none; animation: fspop 0.25s ease-out; }
+.fsalert { position: fixed; top: 0; right: 0; bottom: 0; left: 0; inset: 0; margin: auto; height: fit-content; z-index: 2147483000; width: min(92vw, 460px); background: var(--ink); color: var(--white); border: 4px solid #000; outline: 3px solid var(--yellow); border-radius: 24px; padding: 22px 20px 18px; text-align: center; font: 900 clamp(20px, 5.4vw, 30px) / 1.2 var(--font-ui); pointer-events: none; animation: fspop 0.25s ease-out; }
 .fsbar { height: 12px; border-radius: 999px; margin-top: 14px; background: linear-gradient(90deg, #E52720 0 12.5%, #FFBF00 0 25%, #6BAA2C 0 37.5%, #1976BD 0 50%, #00A79D 0 62.5%, #FF7A0F 0 75%, #E0005A 0 87.5%, #762A83 0); }
 @keyframes fspop { from { opacity: 0; scale: 0.8; } to { opacity: 1; scale: 1; } }
 @media (prefers-reduced-motion: reduce) { .fsalert { animation: none; } }
@@ -476,7 +477,7 @@ html[data-layout="v"] .ctl { width: 31%; gap: calc(14 * var(--u)); }
 html[data-layout="v"] .disc { width: calc(170 * var(--u)); }
 html[data-layout="v"] .lbl { font-size: max(12px, calc(36 * var(--u))); }
 /* Ventana flotante del engranaje: aquí viven los botones de herramientas en la vista vertical */
-.setpop { position: fixed; inset: 0; z-index: 35; display: grid; place-items: center; padding: 16px; background: rgba(20, 16, 17, 0.55); }
+.setpop { position: fixed; top: 0; right: 0; bottom: 0; left: 0; inset: 0; z-index: 35; display: grid; place-items: center; padding: 16px; background: rgba(20, 16, 17, 0.55); }
 .setcard { background: var(--ink); border: 4px solid #000; outline: 3px solid var(--yellow); border-radius: 24px; padding: 18px; }
 .setcard .tools { margin: 0; max-width: none; flex-direction: column; flex-wrap: nowrap; align-items: center; justify-content: center; gap: 0; }
 .setcard .toolrow { width: auto; grid-template-columns: repeat(5, max-content); justify-content: center; gap: 8px; }
@@ -521,6 +522,7 @@ body { background: var(--bg-pc, var(--page)); transition: background-color 0.3s 
 body::before {
   --tile: clamp(200px, 24vmin, 300px);
   content: ""; position: fixed; z-index: 0; pointer-events: none;
+  top: calc(var(--tile) * -1); right: 0; bottom: 0; left: calc(var(--tile) * -1);
   inset: calc(var(--tile) * -1) 0 0 calc(var(--tile) * -1);
   background-color: var(--bg-sec, #8B1A1A);
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20281.9%20281.9'%3E%3Cpath%20fill='%23000'%20fill-rule='evenodd'%20d='m%20273.02%2C46.42%20h%208.89%20v%2027.24%20h%20-8.89%20z%20M%200%2C0%20H%2010.45%20C%209.62%2C5.35%205.37%2C9.58%200%2C10.37%20Z%20M%2050.23%2C0%20H%2068.11%20C%2067.87%2C9.1%2065.87%2C18.02%2062.19%2C26.34%20L%2075.22%2C34.4%2030.47%2C57.26%2033.28%2C8.47%2046.78%2C16.82%20C%2048.85%2C11.44%2050.01%2C5.76%2050.22%2C0%20Z%20m%20217.61%2C0%20h%2014.06%20v%2010.37%20c%20-0.59%2C0.09%20-1.19%2C0.13%20-1.81%2C0.13%20-0.53%2C0%20-1.06%2C-0.03%20-1.58%2C-0.1%20l%20-17.8%2C20.93%20-9.55%2C-8.12%2017.42%2C-20.48%20c%20-0.35%2C-0.87%20-0.6%2C-1.79%20-0.75%2C-2.72%20z%20m%2014.06%2C208.25%20v%2027.24%20h%20-7.91%20v%20-27.24%20z%20m%200%2C33.24%20v%2040.42%20h%20-14.06%20c%20-0.1%2C-0.63%20-0.15%2C-1.26%20-0.15%2C-1.9%200%2C-4.46%202.39%2C-8.52%206.15%2C-10.72%20v%20-27.8%20z%20M%2068.11%2C281.91%20H%2050.23%20c%200.02%2C-0.63%200.03%2C-1.27%200.03%2C-1.9%200%2C-20.84%20-12.4%2C-39.62%20-31.48%2C-47.84%20l%20-2.54%2C-1.1%207.53%2C-16.23%202.41%2C1.05%20c%2025.45%2C11.13%2041.95%2C36.26%2041.95%2C64.11%200%2C0.63%20-0.01%2C1.27%20-0.03%2C1.9%20z%20m%20-57.67%2C0%20H%20-0.01%20v%20-40.42%20h%204.25%20v%2027.69%20c%203.87%2C2.17%206.34%2C6.28%206.34%2C10.83%200%2C0.65%20-0.05%2C1.28%20-0.15%2C1.9%20z%20M%20-0.01%2C235.5%20v%20-27.24%20h%204.79%20v%2027.24%20z%20m%200%2C-161.83%20V%2046.43%20H%203.8%20V%2073.67%20Z%20M%20208.81%2C18.72%20206.66%2C6.2%20l%2026.85%2C-4.6%202.15%2C12.51%20z%20m%2010.5%2C23.04%20-6.24%2C-11.06%2023.72%2C-13.39%206.25%2C11.06%20-23.72%2C13.4%20z%20m%2017.74%2C18.19%20-9.62%2C-8.29%2017.78%2C-20.64%209.62%2C8.29%20-17.79%2C20.64%20z%20m%2022.75%2C11.08%20-11.85%2C-4.56%209.78%2C-25.42%2011.85%2C4.56%20-9.78%2C25.43%20z%20M%207.51%2C46.14%2019.42%2C41.73%2028.89%2C67.28%2016.98%2C71.69%207.52%2C46.14%20Z%20m%20124.54%2C141.24%20h%2012.7%20v%2027.24%20h%20-12.7%20z%20m%2016.41%2C-0.28%2011.91%2C-4.41%209.47%2C25.55%20-11.91%2C4.41%20-9.46%2C-25.55%20z%20m%20-40.62%2C-112.99%2011.91%2C-4.41%209.47%2C25.54%20-11.91%2C4.41%20-9.46%2C-25.55%20z%20m%20-20.85%2C14.7%209.7%2C-8.19%2017.58%2C20.81%20-9.7%2C8.19%20z%20m%20-14.58%2C20.85%206.34%2C-11%2023.6%2C13.61%20-6.35%2C11%20-23.59%2C-13.62%20z%20m%20-6.66%2C24.65%202.23%2C-12.5%2026.82%2C4.78%20-2.23%2C12.5%20z%20m%202.1%2C25.38%20-2.15%2C-12.52%2026.85%2C-4.6%202.15%2C12.51%20z%20m%2010.5%2C23.04%20-6.24%2C-11.06%2023.72%2C-13.39%206.25%2C11.06%20-23.72%2C13.4%20z%20m%2017.74%2C18.19%20-9.62%2C-8.29%2017.78%2C-20.64%209.62%2C8.29%20-17.79%2C20.64%20z%20m%2022.75%2C11.08%20-11.85%2C-4.56%209.78%2C-25.42%2011.85%2C4.56%20-9.78%2C25.43%20z%20m%2014.03%2C-83.64%20v%20-27.8%20h%2012.31%20v%2027.69%20c%203.87%2C2.17%206.34%2C6.28%206.34%2C10.83%200%2C6.84%20-5.55%2C12.4%20-12.4%2C12.4%20-0.53%2C0%20-1.06%2C-0.03%20-1.58%2C-0.1%20l%20-17.8%2C20.93%20-9.55%2C-8.12%2017.42%2C-20.48%20c%20-0.59%2C-1.46%20-0.89%2C-3.03%20-0.89%2C-4.62%200%2C-4.46%202.39%2C-8.52%206.15%2C-10.72%20z%20m%2054.86%2C29.44%20c%202.3%2C-5.97%203.47%2C-12.3%203.47%2C-18.72%200%2C-20.84%20-12.4%2C-39.62%20-31.48%2C-47.84%20l%20-2.54%2C-1.1%207.53%2C-16.23%202.41%2C1.05%20c%2025.45%2C11.13%2041.95%2C36.26%2041.95%2C64.11%200%2C9.75%20-2.01%2C19.35%20-5.94%2C28.24%20l%2013.03%2C8.06%20-44.75%2C22.86%202.81%2C-48.79%2013.5%2C8.35%20z%20M%20133.02%2C67.32%20h%2012.7%20v%2027.24%20h%20-12.7%20z%20m%20115.76%2C147.74%2011.91%2C-4.41%209.47%2C25.54%20-11.91%2C4.41%20-9.46%2C-25.55%20z%20m%20-20.85%2C14.7%209.7%2C-8.19%2017.58%2C20.81%20-9.7%2C8.19%20z%20m%20-14.58%2C20.85%206.34%2C-11%2023.6%2C13.61%20-6.35%2C11%20-23.59%2C-13.62%20z%20m%20-6.66%2C24.65%202.23%2C-12.5%2026.82%2C4.78%20-2.23%2C12.5%20z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20281.9%20281.9'%3E%3Cpath%20fill='%23000'%20fill-rule='evenodd'%20d='m%20273.02%2C46.42%20h%208.89%20v%2027.24%20h%20-8.89%20z%20M%200%2C0%20H%2010.45%20C%209.62%2C5.35%205.37%2C9.58%200%2C10.37%20Z%20M%2050.23%2C0%20H%2068.11%20C%2067.87%2C9.1%2065.87%2C18.02%2062.19%2C26.34%20L%2075.22%2C34.4%2030.47%2C57.26%2033.28%2C8.47%2046.78%2C16.82%20C%2048.85%2C11.44%2050.01%2C5.76%2050.22%2C0%20Z%20m%20217.61%2C0%20h%2014.06%20v%2010.37%20c%20-0.59%2C0.09%20-1.19%2C0.13%20-1.81%2C0.13%20-0.53%2C0%20-1.06%2C-0.03%20-1.58%2C-0.1%20l%20-17.8%2C20.93%20-9.55%2C-8.12%2017.42%2C-20.48%20c%20-0.35%2C-0.87%20-0.6%2C-1.79%20-0.75%2C-2.72%20z%20m%2014.06%2C208.25%20v%2027.24%20h%20-7.91%20v%20-27.24%20z%20m%200%2C33.24%20v%2040.42%20h%20-14.06%20c%20-0.1%2C-0.63%20-0.15%2C-1.26%20-0.15%2C-1.9%200%2C-4.46%202.39%2C-8.52%206.15%2C-10.72%20v%20-27.8%20z%20M%2068.11%2C281.91%20H%2050.23%20c%200.02%2C-0.63%200.03%2C-1.27%200.03%2C-1.9%200%2C-20.84%20-12.4%2C-39.62%20-31.48%2C-47.84%20l%20-2.54%2C-1.1%207.53%2C-16.23%202.41%2C1.05%20c%2025.45%2C11.13%2041.95%2C36.26%2041.95%2C64.11%200%2C0.63%20-0.01%2C1.27%20-0.03%2C1.9%20z%20m%20-57.67%2C0%20H%20-0.01%20v%20-40.42%20h%204.25%20v%2027.69%20c%203.87%2C2.17%206.34%2C6.28%206.34%2C10.83%200%2C0.65%20-0.05%2C1.28%20-0.15%2C1.9%20z%20M%20-0.01%2C235.5%20v%20-27.24%20h%204.79%20v%2027.24%20z%20m%200%2C-161.83%20V%2046.43%20H%203.8%20V%2073.67%20Z%20M%20208.81%2C18.72%20206.66%2C6.2%20l%2026.85%2C-4.6%202.15%2C12.51%20z%20m%2010.5%2C23.04%20-6.24%2C-11.06%2023.72%2C-13.39%206.25%2C11.06%20-23.72%2C13.4%20z%20m%2017.74%2C18.19%20-9.62%2C-8.29%2017.78%2C-20.64%209.62%2C8.29%20-17.79%2C20.64%20z%20m%2022.75%2C11.08%20-11.85%2C-4.56%209.78%2C-25.42%2011.85%2C4.56%20-9.78%2C25.43%20z%20M%207.51%2C46.14%2019.42%2C41.73%2028.89%2C67.28%2016.98%2C71.69%207.52%2C46.14%20Z%20m%20124.54%2C141.24%20h%2012.7%20v%2027.24%20h%20-12.7%20z%20m%2016.41%2C-0.28%2011.91%2C-4.41%209.47%2C25.55%20-11.91%2C4.41%20-9.46%2C-25.55%20z%20m%20-40.62%2C-112.99%2011.91%2C-4.41%209.47%2C25.54%20-11.91%2C4.41%20-9.46%2C-25.55%20z%20m%20-20.85%2C14.7%209.7%2C-8.19%2017.58%2C20.81%20-9.7%2C8.19%20z%20m%20-14.58%2C20.85%206.34%2C-11%2023.6%2C13.61%20-6.35%2C11%20-23.59%2C-13.62%20z%20m%20-6.66%2C24.65%202.23%2C-12.5%2026.82%2C4.78%20-2.23%2C12.5%20z%20m%202.1%2C25.38%20-2.15%2C-12.52%2026.85%2C-4.6%202.15%2C12.51%20z%20m%2010.5%2C23.04%20-6.24%2C-11.06%2023.72%2C-13.39%206.25%2C11.06%20-23.72%2C13.4%20z%20m%2017.74%2C18.19%20-9.62%2C-8.29%2017.78%2C-20.64%209.62%2C8.29%20-17.79%2C20.64%20z%20m%2022.75%2C11.08%20-11.85%2C-4.56%209.78%2C-25.42%2011.85%2C4.56%20-9.78%2C25.43%20z%20m%2014.03%2C-83.64%20v%20-27.8%20h%2012.31%20v%2027.69%20c%203.87%2C2.17%206.34%2C6.28%206.34%2C10.83%200%2C6.84%20-5.55%2C12.4%20-12.4%2C12.4%20-0.53%2C0%20-1.06%2C-0.03%20-1.58%2C-0.1%20l%20-17.8%2C20.93%20-9.55%2C-8.12%2017.42%2C-20.48%20c%20-0.59%2C-1.46%20-0.89%2C-3.03%20-0.89%2C-4.62%200%2C-4.46%202.39%2C-8.52%206.15%2C-10.72%20z%20m%2054.86%2C29.44%20c%202.3%2C-5.97%203.47%2C-12.3%203.47%2C-18.72%200%2C-20.84%20-12.4%2C-39.62%20-31.48%2C-47.84%20l%20-2.54%2C-1.1%207.53%2C-16.23%202.41%2C1.05%20c%2025.45%2C11.13%2041.95%2C36.26%2041.95%2C64.11%200%2C9.75%20-2.01%2C19.35%20-5.94%2C28.24%20l%2013.03%2C8.06%20-44.75%2C22.86%202.81%2C-48.79%2013.5%2C8.35%20z%20M%20133.02%2C67.32%20h%2012.7%20v%2027.24%20h%20-12.7%20z%20m%20115.76%2C147.74%2011.91%2C-4.41%209.47%2C25.54%20-11.91%2C4.41%20-9.46%2C-25.55%20z%20m%20-20.85%2C14.7%209.7%2C-8.19%2017.58%2C20.81%20-9.7%2C8.19%20z%20m%20-14.58%2C20.85%206.34%2C-11%2023.6%2C13.61%20-6.35%2C11%20-23.59%2C-13.62%20z%20m%20-6.66%2C24.65%202.23%2C-12.5%2026.82%2C4.78%20-2.23%2C12.5%20z'/%3E%3C/svg%3E");
@@ -577,8 +579,17 @@ body { position: relative; }
 
 /* Fallback para navegadores antiguos sin unidades de consulta de contenedor (cqw). */
 @supports not (width: 1cqw) {
-  .clock { --u: calc(100vw * 0.0004106786); }
-  html[data-layout="v"] .clock { --u: calc(100vw * 0.001); }
+  .clock { --u: calc(var(--stage-w, 100vw) * 0.0004106786); }
+  html[data-layout="v"] .clock { --u: calc(var(--stage-w, 100vw) * 0.001); }
+  /* Mismos ajustes de pantalla estrecha que el bloque @container, activados por data-narrow (lo pone el script de respaldo). */
+  html[data-narrow="1"][data-layout="h"] .clock { --small: max(7px, calc(34 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .status { font-size: max(7px, calc(40 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .badge { font-size: max(7px, calc(40 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .pname { font-size: max(7px, calc(64 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .unit { font-size: max(7px, calc(56 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .mode { font-size: max(6px, calc(30 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .lbl { font-size: max(7px, calc(44 * var(--u))); }
+  html[data-narrow="1"][data-layout="h"] .pbtn { --ib: max(14px, calc(76 * var(--u))); border-width: max(1.5px, calc(5 * var(--u))); }
 }
 
 /* En vertical el reloj ocupa el ancho disponible y puede crecer en altura:
@@ -2491,8 +2502,10 @@ const UnoSound = (() => {
     const w = Math.max(1, window.innerWidth);
     const h = Math.max(1, window.innerHeight);
     // La composición apaisada necesita una pantalla claramente más ancha que alta.
+    // Histéresis: si ya está en vertical, hace falta una pantalla algo más ancha para volver a horizontal (evita saltos entre vistas).
+    const limit = vertical ? 1.6 : 1.5;
     return (window.matchMedia && window.matchMedia('(orientation: portrait)').matches) ||
-      w <= 560 || (w / h) < 1.5;
+      w <= 560 || (w / h) < limit;
   };
   let vertical = false;
   function sync() {
@@ -2524,11 +2537,16 @@ const UnoSound = (() => {
   orient.addEventListener('click', () => setLayout(!vertical));
   // El formato se adapta al dispositivo y a los cambios de orientación/tamaño.
   // El botón de orientación sigue permitiendo cambiarlo manualmente.
-  let resizeFrame = 0;
+  let resizeFrame = 0, lastW = window.innerWidth, lastH = window.innerHeight;
+  const typing = () => { const a = document.activeElement; return !!a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable); };
   const adaptToViewport = () => {
     if (resizeFrame) cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(() => {
       resizeFrame = 0;
+      const w = window.innerWidth, h = window.innerHeight;
+      // Barras del navegador que se ocultan o teclado en pantalla: solo cambia el alto un poco; no se reacomoda ni se pisa la vista elegida a mano.
+      if (typing() || (w === lastW && Math.abs(h - lastH) < 150)) return;
+      lastW = w; lastH = h;
       const next = wantsVerticalLayout();
       if (next !== vertical) setLayout(next, false);
     });
@@ -2626,6 +2644,35 @@ const UnoSound = (() => {
   });
   // Al cambiar de idioma, los nombres por defecto ya se traducen solos; aquí solo se actualiza la etiqueta de ayuda.
   UnoI18n.onChange(() => names.forEach((fn) => fn()));
+})();
+</script>
+<script>
+/* Respaldo para navegadores sin unidades cqw o sin aspect-ratio: mide el ancho real del escenario y lo publica en --stage-w,
+   marca data-narrow (equivale al @container de 640 px) y fija la altura del reloj en la vista horizontal.
+   En navegadores modernos no hace nada. */
+(() => {
+  const ok = (p, v) => !!(window.CSS && CSS.supports && CSS.supports(p, v));
+  const noCq = !ok('width', '1cqw'), noAr = !ok('aspect-ratio', '1');
+  if (!noCq && !noAr) return;
+  const root = document.documentElement, stage = document.getElementById('stage'), clock = document.getElementById('clock');
+  if (!stage || !clock) return;
+  let busy = 0;
+  function apply() {
+    busy = 0;
+    const w = stage.getBoundingClientRect().width;
+    if (!w) return;
+    if (noCq) {
+      root.style.setProperty('--stage-w', w + 'px');
+      root.setAttribute('data-narrow', w <= 640 ? '1' : '0');
+    }
+    if (noAr) clock.style.height = root.getAttribute('data-layout') === 'v' ? '' : (w * 1316 / 2435) + 'px';
+  }
+  const queue = () => { if (!busy) busy = requestAnimationFrame(apply); };
+  window.addEventListener('resize', queue, { passive: true });
+  window.addEventListener('orientationchange', queue, { passive: true });
+  window.addEventListener('load', queue);
+  if (window.MutationObserver) new MutationObserver(queue).observe(root, { attributes: true, attributeFilter: ['data-layout'] });
+  apply();
 })();
 </script>
 </body>
